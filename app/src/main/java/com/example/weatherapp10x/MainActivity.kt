@@ -3,6 +3,7 @@ package com.example.weatherapp10x
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp10x.databinding.ActivityMainBinding
@@ -60,6 +61,18 @@ class MainActivity : AppCompatActivity() {
                 binding.loadingIndicator.visibility = View.GONE
             }
         }
+
+        viewModel.isFailed.observe(this) { isFailed ->
+            if (isFailed) {
+                Toast.makeText(this, "Something went wring", Toast.LENGTH_LONG).show()
+                binding.parentView.visibility = View.GONE
+                binding.loadingIndicator.visibility = View.VISIBLE
+            } else {
+                binding.parentView.visibility = View.VISIBLE
+                binding.loadingIndicator.visibility = View.GONE
+            }
+        }
+
 
     }
 

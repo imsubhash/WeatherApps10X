@@ -29,6 +29,9 @@ constructor(private val repository: WeatherRepository) : ViewModel() {
     private val _loading = MutableLiveData<Boolean>()
     val loading get() = _loading
 
+    private val _isFailed = MutableLiveData<Boolean>()
+    val isFailed get() = _isFailed
+
     init {
         getCurrentWeather()
         getWeatherForecast()
@@ -41,7 +44,8 @@ constructor(private val repository: WeatherRepository) : ViewModel() {
                 _loading.postValue(false)
                 _weatherResponse.postValue(response.body())
             } else {
-                Log.d("tag", "getWeather Error: ${response.code()}")
+                isFailed.postValue(true)
+                Log.d("Subhash", "getWeather Error: ${response.code()}")
             }
         }
     }
@@ -51,7 +55,8 @@ constructor(private val repository: WeatherRepository) : ViewModel() {
             if (response.isSuccessful) {
                 _forecastResponse.postValue(response.body())
             } else {
-                Log.d("tag", "getWeatherForecast Error: ${response.code()}")
+                isFailed.postValue(true)
+                Log.d("Subhash", "getWeatherForecast Error: ${response.code()}")
             }
         }
     }
